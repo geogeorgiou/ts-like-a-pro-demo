@@ -1,0 +1,1 @@
+type Start = { type: 'start' };
