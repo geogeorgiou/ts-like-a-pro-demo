@@ -35,7 +35,7 @@ CSS purists will shout at me 😩 but useful for [Styled Components 💅](https:
 ```typescript
 type RgbCssString = `rgb(${number}, ${number}, ${number})`;
 
-const rgb: RgbCssString = 'rgb(255, 255, 100%)';
+const rgb: RgbCssString = 'rgb(255, 255, 255)';
 ```
 
 ## TS Compile Safety
