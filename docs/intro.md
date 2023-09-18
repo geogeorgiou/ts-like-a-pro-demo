@@ -16,6 +16,10 @@ Or **go through the Typescript examples directly**.
 
 - [TS](https://www.npmjs.com/package/typescript) version 5 or above
 
-## What's next?? 🎉🎉🎉
+## What's next?? 🚀🚀🚀
 
-- [Go hard on Type Challenges repo](https://github.com/type-challenges/type-challenges) brace yourself and try to solve 'em community is going to be your judge! 🔥🔥🔥
+- Want to get some typescript utilities out of the box ? Try [ts-toolbelt](https://github.com/millsp/ts-toolbelt)
+
+- Want to validate forms in an easier way? try out [Yup](https://github.com/jquense/yup) or [Zod](https://github.com/colinhacks/zod) libraries!
+
+- [Go hard on solving issues on the Type Challenges repo](https://github.com/type-challenges/type-challenges) but brace yourself; community is going to be your judge! 🔥🔥🔥
