@@ -50,18 +50,18 @@ Completely reverse of Enum they aggragate information not as string but as their
 
 ## Pros & Cons 📋
 
-| Purpose                 | Enum type | Union type |
-| ----------------------- | --------- | ---------- |
-| Muli API OOO            | ✅        | ❌         |
-| Combination flexibility | ❌        | ✅         |
-| Less JS transpiled      | ❌        | ✅         |
-| Merge Allowed           | ❌        | ✅         |
-| Clear Semantics         | ✅        | ❌         |
-| Fix Set of Values       | ✅        | ✅         |
-| Needs Import            | ✅        | ❌         |
+| Purpose                 | Enum type | Literal type |
+| ----------------------- | --------- | ------------ |
+| Muli API OOB            | ✅        | ❌           |
+| Combination flexibility | ❌        | ✅           |
+| Less JS transpiled      | ❌        | ✅           |
+| Merge Allowed           | ❌        | ✅           |
+| Clear Semantics         | ✅        | ❌           |
+| Fix Set of Values       | ✅        | ✅           |
+| Needs Import            | ✅        | ❌           |
 
 ### Biggest Reason to go with Enum
 
-Because union types are very explicit this would mean that we would have to re-write everything under the literal way paradigm if much infra is coupled to our code.
+Because Literal types are very explicit this would mean that we would have to re-write everything under the Literal way paradigm if much infra is coupled to our code.
 
-Enums are basically strings but Union types are not!
+Enums are basically strings but Literal types are not!
