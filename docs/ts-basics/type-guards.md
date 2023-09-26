@@ -11,37 +11,50 @@ Let's start off by defining some types:
 ```typescript
 type CheckboxProps = {
   type: 'checkbox';
-  options: string[];
+  checked: boolean;
 };
 
 type TextProps = {
   type: 'text';
+  value: string;
 };
 
 type RadioProps = {
   type: 'radio';
+  selected: boolean;
 };
 
-//all of them can constitute a more broad type
+//all of them can constitute a more broad type (also called Descriminated union)
+//discriminant being the `type` prop here
 type InputProps = CheckboxProps | TextProps | RadioProps;
 ```
 
 Type guards allow you to make more specific type assertions based on runtime checks.
 
 ```typescript
-function isTextProps(props: InputProps): props is TextProps {
-  return props.type === 'text';
+function isCheckbox(input: InputProps): input is CheckboxProps {
+  return input.type === 'checkbox';
 }
 
-function isCheckboxProps(props: InputProps): props is CheckboxProps {
-  return props.type === 'checkbox' && Array.isArray(props.options);
+function isText(input: InputProps): input is TextProps {
+  return input.type === 'text';
 }
 
-function isRadioProps(props: InputProps): props is RadioProps {
-  return props.type === 'radio';
+function isRadio(input: InputProps): input is RadioProps {
+  return input.type === 'radio';
 }
 
-isCheckboxProps({ type: 'checkbox', options: [] });
+// let's use these type guards to narrow down the type of input!
+function consoleLogPerType(input: InputProps) {
+  if (isCheckbox(input)) {
+    // TS nags that Property 'selected' does not exist on type 'CheckboxProps'
+    console.log(input.selected);
+  } else if (isText(input)) {
+    // ...
+  } else {
+    // TS infers that input: RadioProps!
+  }
+}
 ```
 
 # Discriminated Union
@@ -51,47 +64,26 @@ In TypeScript, a discriminated union (also known as a tagged union or algebraic 
 ```typescript
 import React from 'react';
 
-// Define a discriminated union for different message types
-type Message =
-  | {
-      type: 'error';
-      content: string;
-    }
-  | {
-      type: 'success';
-      content: string;
-    }
-  | {
-      type: 'info';
-      content: string;
-    };
-
-// Component that renders different messages based on the type
-const MessageComponent: React.FC<Message> = ({ type, content }) => {
-  switch (type) {
-    case 'error':
-      return <div className='error'>{content}</div>;
-    case 'success':
-      return <div className='success'>{content}</div>;
-    case 'info':
-      return <div className='info'>{content}</div>;
-    default:
-      return null;
+// Let's make a dynamic render based on type
+function renderInput(input: InputProps): JSX.Element {
+  switch (input.type) {
+    case 'checkbox':
+      // input.selected doesn't exist for type checkbox!
+      return <input type='checkbox' checked={input.selected} />;
+    case 'text':
+      return <input type='text' value={input.value} />;
+    case 'radio':
+      return <input type='radio' checked={input.selected} />;
   }
-};
+}
 
-// Example usage
-const App: React.FC = () => {
-  return (
-    <div>
-      <MessageComponent type='error' content='An error occurred!' />
-      <MessageComponent type='success' content='Operation successful!' />
-      <MessageComponent type='info' content='Information message.' />
-    </div>
-  );
-};
-
-export default App;
+// same type safety applies on function call level!
+renderInput({ type: 'checkbox', selected: true });
 ```
 
 This can be extended further on! 🤯 for more customisation if we want to have some descriminants have more or different attributes but this would require that we have to use type-guards to narrow down props into our specific case 🤔...
+
+# Final Notes:
+
+- Use type guards to narrow down the type of input of descriminated unions together if the props complexity is increased e.g. different function calls based on type of input
+- Descriminated unions work both inside and outside of function calls providing robust type safe code 💪 but the descriminant as of this moment **can only be a literal type (TS 5.0).**

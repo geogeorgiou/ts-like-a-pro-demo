@@ -45,7 +45,6 @@ Let's create a file `getCountryLocation.ts`:
 ```typescript
 type Locations = 'Greece' | 'Italy' | 'Spain';
 
-//lose compile run-time safety
 function getCountryLocation(country: Locations) {
   switch (country) {
     case 'Greece':
@@ -64,7 +63,6 @@ How can we fix this? We can use the negating type `never` which cannot be assign
 ```typescript
 type Locations = 'Greece' | 'Italy' | 'Spain';
 
-//lose compile run-time safety
 function getCountryLocation(country: Locations) {
   switch (country) {
     case 'Greece':
