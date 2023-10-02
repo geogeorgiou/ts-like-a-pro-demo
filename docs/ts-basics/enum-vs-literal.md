@@ -14,53 +14,100 @@ sidebar_position: 7
 
 ```typescript
 enum Option1 {
-  A = 1,
-  B = 2,
+  A = '1',
+  B = '2',
 }
 
 enum Option2 {
-  C = 3,
+  C = '3',
 }
 
-const mixOfOptions = {
-  ...Option1,
-  ...Option2,
-} as const;
+//merge doesn't get the actual literal values!
+type Options = Option1 | Option2;
 
-//merge is hard, don't get the actual literal values!
-type Options = typeof mixOfOptions;
+//Type '"1"' is not assignable to type 'Options'...
+const option: Options = '1';
+
+//this works!
+const option: Option = Option1.A;
 ```
 
 Best used when too many API contracts are involved for example Playwright, Jest, React stuff and so on.
+
+### Deep dive into transpiled JS code
+
+Now lets take a look at the generated JS code for the first enum
+
+```javascript
+var Option1;
+(function (Option1) {
+  Option1['A'] = 'foo';
+  Option1['B'] = 'bar';
+})(Option1 || (Option1 = {}));
+```
 
 ## Literal
 
 ### Usage Example
 
 ```typescript
-type Option1 = 1 | 2;
+type Option1 = '1' | '2';
 
-type Option2 = 3;
+type Option2 = '3';
 
 //merge
 type Options = Option1 | Option2;
+
+//works out of the box
+const option: Options = '1';
 ```
 
-Completely reverse of Enum they aggragate information not as string but as their own special type and they result in much less code when transpiled in JS thus better end result performance.
+Completely reverse of Enum they aggragate information not as string but as their own special type and they don't create overhead when transpiled in JS thus implying better end result performance.
+
+### A Literal caveat
+
+Hope you liked my pun there.. 😅 So what happens if we use literals inside of objects? TS is having a hard time inferring them and that could cause some issues when using props hence objects and attempting to manipulate them before actually passing them to a component.
+
+Let's see how that works
+
+```typescript
+//...using the literal `Options` definition from above
+
+const val = {
+  val: 'insert text here',
+  num: '1',
+};
+
+function calculateX(val: { val: string; num: Options }) {
+  // ...todo
+}
+
+//Types of property 'num' are incompatible.
+//TS expected a literal here! (fix this by casting val `as const`)
+calculateX(val);
+
+//but this works! 🫡
+calculateX({
+  val: 'add another text',
+  num: '2',
+});
+```
 
 ## Pros & Cons 📋
 
 | Purpose                 | Enum type | Literal type |
 | ----------------------- | --------- | ------------ |
+| Intellisense            | ✅        | ✅           |
 | Muli API OOB            | ✅        | ❌           |
-| Combination flexibility | ❌        | ✅           |
-| Less JS transpiled      | ❌        | ✅           |
-| Merge Allowed           | ❌        | ✅           |
+| JS transpiled overhead  | ✅        | ❌           |
+| Literal Merge Allowed   | ❌        | ✅           |
 | Clear Semantics         | ✅        | ❌           |
 | Fix Set of Values       | ✅        | ✅           |
+| Combination flexibility | ❌        | ✅           |
 | Needs Import            | ✅        | ❌           |
+| Needs Casting           | ❌        | ✅           |
 
-### Biggest Reason to go with Enum
+### Biggest Reason to go with Enum 👍
 
 Because Literal types are very explicit this would mean that we would have to re-write everything under the Literal way paradigm if much infra is coupled to our code.
 
