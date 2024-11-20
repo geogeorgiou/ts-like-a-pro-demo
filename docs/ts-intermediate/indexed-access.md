@@ -50,7 +50,6 @@ Did you know you could have inference based on the members of an array ?
 Let's say we got some array with permission values  
 
 ```typescript
-
 //notice as const is used to enforce the readonly aspect of the array
 export const PERMISSIONS = [
     'view-document',
@@ -61,6 +60,12 @@ export const PERMISSIONS = [
 //we can generate the type out of the value here! 🚀
 //infers as "view-document" | "edit-document" | ...
 export type Permission = (typeof PERMISSIONS)[number];
+
+//Bonus Tip 🚀 - Extract into a utility type
+export type ValueFrom<T> = T[keyof T];
+
+//usage
+export type Permission = ValueFrom<typeof PERMISSIONS>;
 ```
 
 This is a very powerful feature of TS because no matter how big is the whole structure of **PERMISSIONS** you don't need `ENUMS` importing them everywhere and polutting your codebase, just use the literals and be done with it!
