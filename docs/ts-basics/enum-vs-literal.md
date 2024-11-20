@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # Enum vs Literal
@@ -41,8 +41,8 @@ Now lets take a look at the generated JS code for the first enum
 ```javascript
 var Option1;
 (function (Option1) {
-  Option1['A'] = 'foo';
-  Option1['B'] = 'bar';
+  Option1['A'] = '1';
+  Option1['B'] = '2';
 })(Option1 || (Option1 = {}));
 ```
 
