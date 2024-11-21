@@ -87,5 +87,32 @@ const onlyTextArray = ['a', 'b', 'c', null].filter(Boolean);
 
 So truthiness assertion and the Boolean hack don't really qualify as being an automatically infered type predicates...
 
-Nonetheless this is a pretty welcome feature for us devs and massively improves the codebase!
+## Bonus 🎁
+
+What if I wanted to do that with an object ? there we should have used the good'ol type guard!
+
+```typescript
+type Person = {
+  id: string;
+  name: string;
+};
+
+const onlyPersonArray = ['a', 'b', 'c', 1, { id: '1', name: 'Peter' }, null];
+
+// Type guard function to check if an element is of type Person
+const isPerson = (item: unknown): item is Person => {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'id' in item &&
+    'name' in item &&
+    item.id === 'string' &&
+    item.name === 'string'
+  );
+};
+
+const onlyPersons = onlyPersonArray.filter(isPerson); //Person[]
+```
+
+This is a pretty welcome feature for us devs and massively improves the codebase!
 So stick to Typescript narrowing and you'll be able to make the most out of this! 🚀
