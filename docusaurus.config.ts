@@ -18,6 +18,15 @@ const config: Config = {
   organizationName: 'geogeorgiou', // Usually your GitHub org/user name.
   projectName: 'ts-like-a-pro-demo', // Usually your repo name.
 
+  // Rspack-based bundler and SWC/Lightning CSS minifiers (default in v4)
+  future: {
+    faster: true,
+    v4: {
+      // Required by faster's SSG worker threads
+      removeLegacyPostBuildHeadAttribute: true,
+    },
+  },
+
   onBrokenLinks: 'throw',
 
   markdown: {
