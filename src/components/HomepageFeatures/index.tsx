@@ -1,11 +1,11 @@
-import React from 'react';
+import type { ComponentProps, ComponentType, ReactNode } from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+  Svg: ComponentType<ComponentProps<'svg'>>;
+  description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
@@ -41,13 +41,13 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({ title, Svg, description }: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+      <div className='text--center'>
+        <Svg className={styles.featureSvg} role='img' />
       </div>
-      <div className="text--center padding-horiz--md">
+      <div className='text--center padding-horiz--md'>
         <h3>{title}</h3>
         <p>{description}</p>
       </div>
@@ -55,11 +55,11 @@ function Feature({title, Svg, description}: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
-      <div className="container">
-        <div className="row">
+      <div className='container'>
+        <div className='row'>
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
