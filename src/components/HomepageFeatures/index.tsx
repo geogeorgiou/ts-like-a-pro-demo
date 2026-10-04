@@ -1,11 +1,11 @@
-import React from 'react';
+import type { ComponentProps, ComponentType, ReactNode } from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+  Svg: ComponentType<ComponentProps<'svg'>>;
+  description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
@@ -55,7 +55,7 @@ function Feature({title, Svg, description}: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
